@@ -7,6 +7,13 @@ from game.entities import Player, Guard, Objective
 from game.world import World
 from game.utils import distance
 
+from settings import (
+    SCREEN_WIDTH, SCREEN_HEIGHT, FPS, GAME_TITLE,
+    PLAYER_SETTINGS, GUARD_SETTINGS, CONTROLS, AI_SETTINGS,
+    DARK_GRAY, GREEN, RED, WHITE, ORANGE
+)
+
+
 class Game:
     def __init__(self):
         pygame.init()
@@ -14,7 +21,7 @@ class Game:
         pygame.display.set_caption(GAME_TITLE)
         self.clock = pygame.time.Clock()
         self.running = True
-        self.font = pygame.font.SysFont('Arial', 24)
+        self.font = pygame.font.SysFont(FONT_NAME, 24)
         self.game_state = "playing"
         self.additional_guards_spawned = False
         
@@ -53,7 +60,7 @@ class Game:
         for _ in range(2):  # Initial guards
             while True:
                 pos = self.world.get_valid_position(
-                    min_dist=200,
+                    min_dist=GUARD_SETTINGS['behavior']['min_spawn_distance'],
                     exclude_pos=(self.player.x, self.player.y)
                 )
                 if pos:
